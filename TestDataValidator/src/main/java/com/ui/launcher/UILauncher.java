@@ -2,13 +2,13 @@ package com.ui.launcher;
 
 import java.awt.Color;
 import java.awt.ComponentOrientation;
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -21,8 +21,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.validator.VersionManager;
+import com.validator.excel.ReadWriteExcel;
 import com.validator.exceptions.CSVXPathException;
 import com.validator.log.LoggingClass;
+import com.validator.qa.idoc.ExcellRow;
+import com.validator.qa.idoc.SplConditions;
 
 public class UILauncher extends JFrame implements ActionListener,ItemListener,Runnable{
 
@@ -150,6 +153,7 @@ public class UILauncher extends JFrame implements ActionListener,ItemListener,Ru
 	JLabel srcHLab=new JLabel("Source Has A Header Row");
 	JLabel tgtHLab=new JLabel("Target Has A Header Row");
 	
+	JButton templateButton=new JButton("GenerateTemplate");
 	
 	
 	public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,6 +165,16 @@ public class UILauncher extends JFrame implements ActionListener,ItemListener,Ru
 		if(src instanceof JButton)
 		{
 			clickedBtn=(JButton)src;
+		}
+		//TODO
+		if(clickedBtn==templateButton)
+		{
+			ReadWriteExcel rwe=new ReadWriteExcel();
+			int resp=rwe.generateTemplateExcel();
+			if(resp==0)
+				JOptionPane.showMessageDialog(this, "Generated Template.xlsx with two sheets");
+			else
+				JOptionPane.showMessageDialog(this, "Failure Generating the File", "Failure", ERROR);
 		}
 		if(clickedBtn==openSourceBtn)
 		{
@@ -471,16 +485,16 @@ public class UILauncher extends JFrame implements ActionListener,ItemListener,Ru
 		
 		y++;
 		c1.gridx=0;
-		c1.weightx=compWt;
+		c1.weightx=labWt;
 		c1.gridy=y;
-		HelpButtonPanel hb=new HelpButtonPanel(this,bgColor);
-		panel1.add(hb,c1);
+		panel1.add(templateButton,c1);
 		
 		c1.gridx=1;
 		c1.weightx=labWt;
 		c1.gridy=y;
 		panel1.add(startButton,c1);
 		startButton.addActionListener(this);
+		templateButton.addActionListener(this);
 		openSourceBtn.addActionListener(this);
 		openTargetBtn.addActionListener(this);
 		openMappingBtn.addActionListener(this);

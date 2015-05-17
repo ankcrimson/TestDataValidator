@@ -700,6 +700,59 @@ return newName;
 }
 
 
+public int generateTemplateExcel()
+{
+	int retVal=0;
+	String newName ="Template.xlsx";
+	try
+	{
+		File newFile=new File(newName);
+		newFile.createNewFile();
+		//Workbook workbook = WorkbookFactory.create(new File(fileName));
+		//WorkbookSettings wbSettings = new WorkbookSettings();
+	    //wbSettings.setLocale(new Locale("en", "EN"));
+		SXSSFWorkbook template=new SXSSFWorkbook(200);
+		Sheet sheet = template.createSheet("Results" );
+		String fields="SourceUniqueXPath	SourceXPath	SourcePrimaryKey	SourceParentValue	SourceValue	SourceIDocAttributes	Validation_SPCondition	ConditionalParameter	TargetUniqueXPath	TargetXPath	TargetPrimaryKey	TargetParentValue	TargetValue	TargetIDocAttributes	Status	Comments";
+		Row row=sheet.createRow(0);
+		String[] farray=fields.split("\t");
+		
+		
+		CellStyle headStyle=template.createCellStyle();
+		Font headFont=template.createFont();
+		headFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+		//headStyle.setFillBackgroundColor(IndexedColors.AQUA.index);
+		headStyle.setFillForegroundColor(IndexedColors.AQUA.index);
+		headStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		headStyle.setFont(headFont);
+		
+		headStyle.setBorderTop(CellStyle.BORDER_THICK);
+		headStyle.setBorderBottom(CellStyle.BORDER_THICK);
+		headStyle.setBorderLeft(CellStyle.BORDER_THICK);
+		headStyle.setBorderRight(CellStyle.BORDER_THICK);
+		
+		for(int i=0;i<farray.length;i++)
+		{
+			Cell cell=row.createCell(i);
+			cell.setCellValue(farray[i]);
+			cell.setCellStyle(headStyle);
+		}
+	
+		writeMoreInfo("KeyInfo", "src/main/resources/Help/KeyInfo.txt", template);
+		FileOutputStream fileOut = new FileOutputStream(newName);
+		
+	    template.write(fileOut);
+	    fileOut.close();
+	    System.out.println("File \""+newName+"\" written");
+		
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		retVal=1;
+	}
+	return retVal;
+}
+
 public static void writeMoreInfo(String sheetName, String KeyInfoFile, SXSSFWorkbook book)
 {
 	 

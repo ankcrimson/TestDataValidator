@@ -1,0 +1,35 @@
+Column Name########Meaning########Heading
+SourceParentXPath########The Xpath of the field which has unique value for each occurrence of the field defined in SourceXPath.<newline> Does not mandatorily be above in the hierarchy
+SourceXPath########The Xpath of the field in source XML
+SourcePrimaryKey########For Future Use, Keep value in this field = TemporaryRow to skip this row in results 
+SourceParentValue########Populated by the utility as a value corresponding to the XPath defined in the SourcePraentXPath field
+SourceValue########Populated by the utility as the transformed value based on the transformation condition and transformation parameter present acting on the field corresponding to the SourceXPath field
+SourceIDocAttributes########The segment identifier xpath and value for the node defined in the SourceXPath
+Validation_SPCondition########The special transformation condition as defined in the below listed table
+ConditionalParameter########The parameter corresponding to the special condition which will be used as an argument as per the below listed table
+TargetParentXPath########"The Xpath of the field which has unique value for each occurrence of the field defined in TargetXPath <newline>Does not mandatorily be above in the hierarchy"
+TargetXPath########The Xpath of the field in target XML
+TargetPrimaryKey########For Future Use, Keep value in this field = TemporaryRow to skip this row in results
+TargetParentValue########Populated by the utility as a value corresponding to the XPath defined in the TargetPraentXPath field
+TargetValue########Populated by the utility as the transformed value based on the transformation condition and transformation parameter present acting on the field corresponding to the TargetXPath field
+TargetIDocAttributes########The segment identifier xpath and value for the node defined in the TargetXPath
+Status########The pass/fail value
+
+
+
+Keyword########Description########Heading
+Decode########a:America,b:Brasil,Default
+<blank>########Direct mapping (since no value present), this is the default behaviour
+Hardcoded########Hardcoded Value
+DateTransform########dd-mm-yyyy,yyyymmdd
+Extract########Extract a particular substring<newline>eg. Source value="112233445566-999"<newline>parameter="-,2"<newline>this results in "999"<newline>and parameter="-,1" gives "112233445566" as output<newline>parameter value starts with 1
+Trim########Trim leading and/or tailing conditional parameter (just like trimming spaces) eg. Parameter="_,B" or "_" tells trim "_" from both sides,<newline "_,R" tells trim from right whereas "_,L" tells trim from left (Note that the switches 'L','R', and 'B' are case independent)
+Padding########Used to Add particular character in the input from left or right side<newline>Pad characters from right or left until the length becomes equal to the specified value <newline>eg. Parameter=“R,6,0",<newline>"R,6,0" tells pad ‘0’ from right until length becomes 6 characters whereas "L,6,0" tells pad ‘0’ from left until length becomes 6 characters (Note that the switches 'L' and ‘R' are case independent)
+IfElse########Used for conditional mapping of data<newline>eg. A>"HardcodedValue",B>//WVINVE03/IDOC/E1WVINH/GIDAT,//WVINVE03/IDOC/E1WVINH/DDATE<newline>If input value is equal to ‘A’, then HardcodedValue is returned,<newline> If input value is ‘B’ then the value corresponding to the xpath: //WVINVE03/IDOC/E1WVINH/GIDAT is considered, otherwise the value corresponding to //WVINVE03/IDOC/E1WVINH/DDATE is considered.<newline>Please note that for hardcoded values, we need to put them within double quotes (“) as shown above
+Date2########Used to transform date using advanced methods..<newline>This uses internal representation of date, thus can be used to convert one format to another."<newline>eg. ddMMyyyy,dd-MMM-yyyy<newline>input data of 01012013 will be transformed to 01-Jan-2013<newline>some more examples with Date2 Patameters   :<newline>Input            Validation_SPCondition ConditionalParameter                Result<newline>31-12-2012  Date2                               dd-MM-yyyy,yyyy-dd-MM         2012-31-12<newline>31-12-2012  Date2                               dd-MM-yyyy,yyyy-dd-MMM     2012-31-Dec<newline>31-12-2012  Date2                               dd-MM-yyyy,yyyy-dd-MMMM 2012-31-December<newline>31-12-2012  Date2                               dd-MM-yyyy,yyyyMMdd            20121231<newline>31-12-2012  Date2                               dd-MM-yyyy,yyMMdd                121231
+Concatenate########Used to concatenate values from multiple fields into a target<newline>Used to concatenate values from multiple fields into a target. For using this, the xpaths mentioned must be present somewhere in the document. We can also concatenate the current value using the "this" keyword<newline>The conditional parameter GBL_PROD_TYPE_CD(15),"-",this, mentioned in the above example, will concatenate the value of GBL_PROD_TYPE_CD with a “-” followed by the value of current element.<newline>Eg. GBL_PROD_TYPE_CD(15)=“ABC”, current value=“123”, value to be matched will be “ABC-123”
+Occurance########This can be used to print a particular occurrence value <newline>This can be used to print a particular occurance value, <newline>eg. <newline>//a/b/c:2<newline>will print the second occurance value of element //a/b/c wherever used
+Multiply########This can be used to multiply values and return the result.<newline>This can be used to multiply values and return the result. <newline>Eg:<newline>"5",this: This can be used to multiply the current value with 5<newline>//a/b/c,"5": This can be used to multiply all the c tag values having same parent/unique value as current element with 5
+Encode########This can be used to encrypt the data into a particular format.<newline>This can be used to encrypt the data into a particular format,<newline>eg.<newline>UTF-8<newline>This will encrypt the data into UTF-8 encoding
+Substring########This can be used to extract substring of the input value.<newline>This can be used to extract substring of the input value… We can provide parameter values as:<newline>6 - Extract the string after 6 characters<newline>3:7   -  Extract the string from 3rd character till 7th character<newline>"0:1:R" will extract same thing but from right side
+Crop########This can be used to trim the input value from left, right or both directions by a specified number of characters<newline>This can be used to trim the input value from left, right or both directions by a specified number of characters… We can provide parameter values as:<newline>L:6 : Crop 6 characters from Left<newline>R:5 : Crop 5 characters from Right<newline>B:2 : Crop 2 characters from both side

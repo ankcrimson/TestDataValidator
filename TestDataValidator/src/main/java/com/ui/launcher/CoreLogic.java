@@ -199,39 +199,13 @@ public class CoreLogic {
 			r.getCell(CommentsPos,Row.CREATE_NULL_AS_BLANK).setCellType(Cell.CELL_TYPE_STRING);
 			String comment=r.getCell(CommentsPos).getStringCellValue();
 			comments.put(new Integer(maprow), comment);
-			/*
-			if(sourceType=="XML")
-		{
-			if(sourceRows.get(SourceXPath)!=null)
-			{
-				ExcellRow r=sourceRows.get(SourceXPath);
-				r.incrementOccurance(maprow);
-			}
-			else{
-			ExcellRow sourceRow=new ExcellRow(SourceXPath,SourceParentXPath,SourceValue,SourceParentValue,SourcePrimaryKey,maprow);
-			sourceRows.put(SourceXPath,sourceRow)
-			}
-		}//done
-			*/
+		
 		if(sourceType.equalsIgnoreCase("IDOC")||sourceType.equalsIgnoreCase("XML")||sourceType.equalsIgnoreCase("FlatFile")||sourceType.equalsIgnoreCase("FlatFile (TrimSpaces)")||sourceType.equalsIgnoreCase("CSV")||sourceType.equalsIgnoreCase("CSV (TrimSpaces)")||sourceType.equalsIgnoreCase("Delimited")||sourceType.equalsIgnoreCase("Delimited (TrimSpaces)"))
 		{
 			ExcellRow sourceRow=new ExcellRow(SourceXPath,SourceParentXPath,SourceValue,SourceParentValue,SourcePrimaryKey,SourceIDocAttributes,maprow);
 			sourceRows.add(sourceRow);
 		}//done
-		/*
-		if(targetType=="XML")
-		{
-			if(targetRows.get(TargetXPath)!=null)
-			{
-				ExcellRow r=targetRows.get(TargetXPath);
-				r.incrementOccurance(maprow);
-			}
-			else{
-			ExcellRow targetRow=new ExcellRow(TargetXPath,TargetParentXPath,TargetValue,TargetParentValue,TargetPrimaryKey,"",maprow);
-			targetRows.put(TargetXPath,targetRow)
-			}
-		}//done
-		*/
+	
 		if(targetType.equalsIgnoreCase("IDOC")||targetType.equalsIgnoreCase("XML")||targetType.equalsIgnoreCase("FlatFile")||targetType.equalsIgnoreCase("FlatFile (TrimSpaces)")||targetType.equalsIgnoreCase("CSV")||targetType.equalsIgnoreCase("CSV (TrimSpaces)")||targetType.equalsIgnoreCase("Delimited")||targetType.equalsIgnoreCase("Delimited (TrimSpaces)"))
 		{
 			ExcellRow targetRow=new ExcellRow(TargetXPath,TargetParentXPath,TargetValue,TargetParentValue,TargetPrimaryKey,TargetIDocAttributes,maprow);
@@ -245,23 +219,7 @@ public class CoreLogic {
 		mappingwrksheet=null;
 		System.gc();
 		fcc.deleteCopy(tmpName);
-		//fcc.deleteCopy(MappingExcelFile);
-		//System.out.println("All Conditions:"+allConditions);
-
-		//for(ExcellRow r:sourceRows.values())
-		//System.out.println(r)
-		//end getting values and putting in memory SOURCE
-		/*
-		if(sourceType=="XML")
-		{
-		Parser.init();
-		Parser p=Parser.getParser();
-		p.start(sourceFileLocation,sourceRows);
-		System.out.println("src rows="+sourceRows);
-		sourcePrintableRows=p.getPrintableRows();
-		finalConditionsToPrint=new ArrayList<SplConditions>();//final conditions to print
-		}
-		*/
+		
 		LoggingClass.logger.info("src rows="+sourceRows);//add to log the source rows from xpath
 		
 		if(sourceType.equalsIgnoreCase("IDOC")||sourceType.equalsIgnoreCase("XML"))
@@ -296,26 +254,7 @@ public class CoreLogic {
 			CSVParser_New.init();
 			CSVParser_New p=CSVParser_New.getParser();
 			
-			/*{
-			String[] regexes="!,$,(,),*,+,-,?,[,\\,],^,|".split(",");
-			String[] delimiterArr=sdelimiter.split("");
-			String x="";
-			outer: for(String sd:delimiterArr)
-			{
-			for(String s:regexes)
-			{
-				if(sd.equals(s))
-				{
-					//sd="\\"+sd;
-					x=x+"\\"+s;
-					continue outer;
-				}
-				
-			}
-			x+=sd;
-			}
-			sdelimiter=x;
-			}*/
+		
 			if(sTextQual!=null&&sTextQual.length()>0)
 			{
 				String[] regexes="!,$,(,),*,+,-,?,[,\\,],^,|".split(",");
@@ -447,19 +386,7 @@ public class CoreLogic {
 		}
 
 System.gc();
-		//System.out.println(sourcePrintableRows);
-		//for(ExcellRow r:sourcePrintableRows)
-		//System.out.println(r)
-		/*
-		if(targetType=="XML")
-		{
-		Parser.init();
-		Parser p2=Parser.getParser();
-		p2.start(targetFileLocation,targetRows);
-		System.out.println("TargetRows:"+targetRows);
-		targetPrintableRows=p2.getPrintableRows();
-		}
-		*/
+	
 		LoggingClass.logger.info("Target rows="+targetRows);//add to log file, target rows from xpath sheet
 
 		if(targetType.equalsIgnoreCase("IDOC")||targetType.equalsIgnoreCase("XML"))
@@ -489,28 +416,7 @@ System.gc();
 		*/
 			CSVParser_New.init();
 			CSVParser_New p2=CSVParser_New.getParser();
-			
-			/*{
-			String[] regexes="!,$,(,),*,+,-,?,[,\\,],^,|".split(",");
-		//
-		String[] delimiterArr=tdelimiter.split("");
-		String x="";
-		outer: for(String td:delimiterArr)
-		{
-		for(String s:regexes)
-		{
-			if(td.equals(s))
-			{
-				//sd="\\"+sd;
-				x=x+"\\"+s;
-				continue outer;
-			}
-			
-		}
-		x+=td;
-		}
-		tdelimiter=x;
-		}*/
+		
 		if(tTextQual!=null&&tTextQual.length()>0)
 		{
 			String[] regexes="!,$,(,),*,+,-,?,[,\\,],^,|".split(",");
@@ -533,15 +439,8 @@ System.gc();
 		}
 		tTextQual=x;
 		}
-		/*for(String s:regexes)
-		{
-			if(tdelimiter.equals(s))
-			{
-				tdelimiter="\\"+tdelimiter;
-				break;
-			}
-		}
-		*/if(targetType.equalsIgnoreCase("CSV (TrimSpaces)")||targetType.equalsIgnoreCase("Delimited (TrimSpaces)"))
+
+		if(targetType.equalsIgnoreCase("CSV (TrimSpaces)")||targetType.equalsIgnoreCase("Delimited (TrimSpaces)"))
 			p2.start(tgtHRow,targetFileLocation,targetRows,tdelimiter,tdelimiter2,allConditions,false,tTextQual,true);
 		else
 			p2.start(tgtHRow,targetFileLocation,targetRows,tdelimiter,tdelimiter2,allConditions,false,tTextQual,false);
@@ -553,49 +452,9 @@ System.gc();
 		//System.out.println("TargetPrintableRowsOriginal"+targetPrintableRows);//
 		//Simple write without any logic
 		LoggingClass.logger.info("Now Matching");
-		//System.out.println("Matching");
-		//System.out.println(sourcePrintableRows);
-		//System.out.println("tpm:"+targetPrintableRows);
+		
 		mappingwrksheetName="Sheet1";
-		/*
-		SourceTargetXpathMatcher matcher=new SourceTargetXpathMatcher();
-		Map<Integer,ExcellRow> srcAllVals=new HashMap<Integer,ExcellRow>();
-		Map<Integer,ExcellRow> targAllVals=new HashMap<Integer,ExcellRow>();
-		for(int excelrow=0;excelrow < sourcePrintableRows.size();excelrow++)
-		{
-//			System.out.println(".");
-			maprow=excelrow+1;
-			System.out.println((maprow/sourcePrintableRows.size())*100+"% done")
-		//source
-		if(excelrow < sourcePrintableRows.size())
-		{
-			ExcellRow s=sourcePrintableRows.get(excelrow);
-			//com.nike.aase.qa.RunExcl.writeToXL(MappingExcelFile,SourceParentXPathPos,SourceXPathPos,SourcePrimaryKeyPos,SourceParentValuePos,SourceValuePos,maprow,s,mappingwrksheetName)
-			srcAllVals.put(maprow,s);
-			def matched=false;
-		for(ExcellRow t:targetPrintableRows)
-		{
-		//def boolean xpathMatched=matcher.compareXpaths(sourceRows,targetRows,s.getXpath(),t.getXpath())//commented on 29th Jan
-		Collection<ExcellRow> sourceRows=(sourceRows instanceof Map)?matcher.getCollectionFromMap(sourceRows):sourceRows;
-		Collection<ExcellRow> targetRows=(targetRows instanceof Map)?matcher.getCollectionFromMap(targetRows):targetRows;
-		def boolean xpathMatched=matcher.compareRows(sourceRows,targetRows,s,t)
-		System.out.println(xpathMatched);
-		//System.out.println("xpathMatched="+xpathMatched);
-			if(xpathMatched)
-			{
-				targAllVals.put(maprow,t);
-				
-			}
-			else
-			{
-				//System.out.println("no match found");
-				//com.nike.aase.qa.RunExcl.writeToXL(MappingExcelFile,TargetParentXPathPos,TargetXPathPos,TargetPrimaryKeyPos,TargetParentValuePos,TargetValuePos,maprow,new ExcellRow(),mappingwrksheetName)
-				targAllVals.put(maprow,new ExcellRow());
-			}
-
-
-		}}}
-		*/
+	
  System.gc();
 				SourceTargetXpathMatcher matcher=new SourceTargetXpathMatcher();
 				Map<Integer,ExcellRow> srcAllVals=new HashMap<Integer,ExcellRow>();
@@ -619,15 +478,10 @@ System.gc();
 					//System.out.println("cps->"+s.getOccurances().get(0)+"cpt->"+t.getOccurances().get(0));
 				if(s.getOccurances().get(0).equals(t.getOccurances().get(0)))
 				{
-					//System.out.println("to_match"+s.getOccurances().get(0));
-				//def boolean xpathMatched=matcher.compareXpaths(sourceRows,targetRows,s.getXpath(),t.getXpath())//commented on 29th Jan
-				//Collection sourceRows=(sourceRows instanceof Map)?matcher.getCollectionFromMap(sourceRows):sourceRows;
-				//Collection targetRows=(targetRows instanceof Map)?matcher.getCollectionFromMap(targetRows):targetRows;
+			
 					
 				boolean xpathMatched=matcher.compareRows(sourceRows,targetRows,s,t);
-				//System.out.println();
-				//System.out.println(xpathMatched);
-				//LoggingClass.logger.info("xpathMatched="+xpathMatched+" for "+t.getXpath());
+			
 					if(xpathMatched)
 					{
 						targAllVals.put(maprow,t);
@@ -642,8 +496,6 @@ System.gc();
 				}
 				if(!matched)
 				{
-					//System.out.println("no match found");
-					//com.nike.aase.qa.RunExcl.writeToXL(MappingExcelFile,TargetParentXPathPos,TargetXPathPos,TargetPrimaryKeyPos,TargetParentValuePos,TargetValuePos,maprow,new ExcellRow(),mappingwrksheetName)
 					boolean tmpStat=false;
 					for(ExcellRow r:targetRows)
 					{

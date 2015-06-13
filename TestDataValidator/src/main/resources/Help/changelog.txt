@@ -1,0 +1,2 @@
+Version 2.07.1
+Minor UI Changes, moved the "Generate Template" button to help menu

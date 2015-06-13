@@ -16,6 +16,9 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -29,6 +32,63 @@ import com.validator.qa.idoc.SplConditions;
 
 public class UILauncher extends JFrame implements ActionListener,ItemListener,Runnable{
 
+	
+	String[] types={"IDOC","XML","FlatFile","FlatFile (TrimSpaces)","CSV","CSV (TrimSpaces)","Delimited","Delimited (TrimSpaces)"};
+	JPanel panel1=new JPanel();
+	JLabel sourceTypeLab=new JLabel("Source Type");
+	//JTextField sourceTypefld=new JTextField();
+	JComboBox sourceTypefld=new JComboBox (types);
+	
+	JLabel targetTypeLab=new JLabel("Target Type");
+	//JTextField targetTypefld=new JTextField();
+	JComboBox targetTypefld=new JComboBox(types);
+	
+	JLabel srcFielLocLab=new JLabel("Source File Location");
+	JTextField srcFielLocfldf=new JTextField();
+	JFileChooser srcFielLocfld=new JFileChooser();
+	
+	JLabel tgtFielLocLab=new JLabel("Target File Location");
+	JTextField tgtFielLocfldf=new JTextField();
+	JFileChooser tgtFielLocfld=new JFileChooser();
+	
+	JLabel mapXLFileLab=new JLabel("Mapping Excel File Location");
+	JTextField mapXLFilefldf=new JTextField();
+	JFileChooser mapXLFilefld=new JFileChooser();
+	JLabel mapWSNameLab=new JLabel("Mapping Worksheet Name");
+	JTextField mapWSNamefld=new JTextField();
+	JButton startButton=new JButton("Start");
+	
+	JButton openSourceBtn=new JButton("Open");
+	JButton openTargetBtn=new JButton("Open");
+	JButton openMappingBtn=new JButton("Open");
+	ImagePanel cimg=new ImagePanel("src/main/resources/images/left.jpg",0);
+	ImagePanel nimg=new ImagePanel("src/main/resources/images/right.jpg",1);
+	
+	JLabel sdelLab=new JLabel("SourceDelemiter");
+	JTextField sdelfld=new JTextField();
+	JLabel tdelLab=new JLabel("TargetDelemiter");
+	JTextField tdelfld=new JTextField();
+	
+	JLabel sTQualLab=new JLabel("SourceTextQualifier");
+	JTextField sTQualfld=new JTextField();
+	JLabel tTQualLab=new JLabel("TargetTextQualifier");
+	JTextField tTQualfld=new JTextField();
+	
+	JCheckBox srcH=new JCheckBox("Source First Row is Header Row");
+	JCheckBox tgtH=new JCheckBox("Target First Row is Header Row");
+	JLabel srcHLab=new JLabel("Source Has A Header Row");
+	JLabel tgtHLab=new JLabel("Target Has A Header Row");
+	
+	//JButton templateButton=new JButton("GenerateTemplate");
+	
+	
+	JMenuBar menubar=new JMenuBar();
+	JMenu filemenu=new JMenu("File");
+	JMenuItem exitItem=new JMenuItem("Exit");
+	JMenu helpmenu=new JMenu("Help");
+	JMenuItem helpItem=new JMenuItem("Help");
+	JMenuItem templateItem=new JMenuItem("Generate Template");
+	
 	/**
 	 * @param args
 	 */
@@ -107,53 +167,6 @@ public class UILauncher extends JFrame implements ActionListener,ItemListener,Ru
 	}
 	
 	
-	String[] types={"IDOC","XML","FlatFile","FlatFile (TrimSpaces)","CSV","CSV (TrimSpaces)","Delimited","Delimited (TrimSpaces)"};
-	JPanel panel1=new JPanel();
-	JLabel sourceTypeLab=new JLabel("Source Type");
-	//JTextField sourceTypefld=new JTextField();
-	JComboBox sourceTypefld=new JComboBox (types);
-	
-	JLabel targetTypeLab=new JLabel("Target Type");
-	//JTextField targetTypefld=new JTextField();
-	JComboBox targetTypefld=new JComboBox(types);
-	
-	JLabel srcFielLocLab=new JLabel("Source File Location");
-	JTextField srcFielLocfldf=new JTextField();
-	JFileChooser srcFielLocfld=new JFileChooser();
-	
-	JLabel tgtFielLocLab=new JLabel("Target File Location");
-	JTextField tgtFielLocfldf=new JTextField();
-	JFileChooser tgtFielLocfld=new JFileChooser();
-	
-	JLabel mapXLFileLab=new JLabel("Mapping Excel File Location");
-	JTextField mapXLFilefldf=new JTextField();
-	JFileChooser mapXLFilefld=new JFileChooser();
-	JLabel mapWSNameLab=new JLabel("Mapping Worksheet Name");
-	JTextField mapWSNamefld=new JTextField();
-	JButton startButton=new JButton("Start");
-	
-	JButton openSourceBtn=new JButton("Open");
-	JButton openTargetBtn=new JButton("Open");
-	JButton openMappingBtn=new JButton("Open");
-	ImagePanel cimg=new ImagePanel("src/main/resources/images/left.jpg",0);
-	ImagePanel nimg=new ImagePanel("src/main/resources/images/right.jpg",1);
-	
-	JLabel sdelLab=new JLabel("SourceDelemiter");
-	JTextField sdelfld=new JTextField();
-	JLabel tdelLab=new JLabel("TargetDelemiter");
-	JTextField tdelfld=new JTextField();
-	
-	JLabel sTQualLab=new JLabel("SourceTextQualifier");
-	JTextField sTQualfld=new JTextField();
-	JLabel tTQualLab=new JLabel("TargetTextQualifier");
-	JTextField tTQualfld=new JTextField();
-	
-	JCheckBox srcH=new JCheckBox("Source First Row is Header Row");
-	JCheckBox tgtH=new JCheckBox("Target First Row is Header Row");
-	JLabel srcHLab=new JLabel("Source Has A Header Row");
-	JLabel tgtHLab=new JLabel("Target Has A Header Row");
-	
-	JButton templateButton=new JButton("GenerateTemplate");
 	
 	
 	public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,13 +174,14 @@ public class UILauncher extends JFrame implements ActionListener,ItemListener,Ru
 		
 		try{
 		JButton clickedBtn=null;
+		
 		Object src=evt.getSource();
 		if(src instanceof JButton)
 		{
 			clickedBtn=(JButton)src;
 		}
 		//TODO
-		if(clickedBtn==templateButton)
+		if(src==templateItem)
 		{
 			ReadWriteExcel rwe=new ReadWriteExcel();
 			int resp=rwe.generateTemplateExcel();
@@ -277,7 +291,7 @@ public class UILauncher extends JFrame implements ActionListener,ItemListener,Ru
 		//panel1.setLayout(new GridLayout(7,2,10,20));
 		panel1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		panel1.setLayout(new GridBagLayout());
-		setupFirst();
+		setupDisplayPanel();
 		this.add(panel1);
 		setVisible(true);
 		setSize(900, 550);
@@ -289,9 +303,21 @@ public class UILauncher extends JFrame implements ActionListener,ItemListener,Ru
 		}
 	}
 	
-	public void setupFirst()
+	public void setupMenu()
+	{
+		filemenu.add(exitItem);
+		helpmenu.add(helpItem);
+		helpmenu.add(templateItem);
+		menubar.add(filemenu);
+		menubar.add(helpmenu);
+	templateItem.addActionListener(this);
+	}
+	
+	public void setupDisplayPanel()
 	{
 		
+		setupMenu();
+		this.setJMenuBar(menubar);
 		double labWt=0.5;
 		double compWt=1.5;
 		double ifldWt=1.5;
@@ -484,17 +510,17 @@ public class UILauncher extends JFrame implements ActionListener,ItemListener,Ru
 		panel1.add(mapWSNamefld,c1);
 		
 		y++;
-		c1.gridx=0;
-		c1.weightx=labWt;
-		c1.gridy=y;
-		panel1.add(templateButton,c1);
+		//c1.gridx=0;
+		//c1.weightx=labWt;
+		//c1.gridy=y;
+		//panel1.add(templateButton,c1);
 		
 		c1.gridx=1;
 		c1.weightx=labWt;
 		c1.gridy=y;
 		panel1.add(startButton,c1);
 		startButton.addActionListener(this);
-		templateButton.addActionListener(this);
+		//templateButton.addActionListener(this);
 		openSourceBtn.addActionListener(this);
 		openTargetBtn.addActionListener(this);
 		openMappingBtn.addActionListener(this);

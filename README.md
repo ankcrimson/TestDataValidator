@@ -15,4 +15,4 @@ _ All the work that needs to be done is preparation of a simple mapping document
 * To put it simply, it can do validations with documentation of results in seconds what software testers will take days to do.
 
 ### It finds its applications in Testing Applications (Specially Middleware but not limited to it)
-## It can test any type of file that is text editable... If it doesnt satisfy your needs, do Write to us and we will update it for FREE
+## It can test any type of file that is text editable... If it doesnt satisfy your needs, do Write to us and we will update it in our upcoming versions
